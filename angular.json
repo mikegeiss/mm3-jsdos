@@ -25,12 +25,19 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/js-dos.js",
+              "src/js-dos.map",
+              "src/wdosbox.wasm.js",
+              "src/wdosbox.js",
+              "src/MM3.zip"
             ],
             "styles": [
               "src/styles.less"
             ],
-            "scripts": []
+            "scripts": [
+              "src/js-dos.js"
+            ]
           },
           "configurations": {
             "production": {
