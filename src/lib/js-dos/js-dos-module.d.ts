@@ -1,0 +1,36 @@
+import { DosRuntime } from "./js-dos";
+import { DosCommandInterface } from "./js-dos-ci";
+import { DosOptions } from "./js-dos-options";
+export declare class DosModule extends DosOptions {
+    isValid: boolean;
+    canvas: HTMLCanvasElement;
+    version: string;
+    onglobals?: (...args: any[]) => void;
+    ci: Promise<DosCommandInterface>;
+    private instance;
+    private fs;
+    private ui;
+    private onready;
+    private tickListeners;
+    private pauseListeners;
+    private resumeListeners;
+    private terminateListeners;
+    private ciResolveFn;
+    constructor(canvas: HTMLCanvasElement, onready: (runtime: DosRuntime) => void);
+    private registerDefaultListeners;
+    debug(message: string): void;
+    info(message: string): void;
+    warn(message: string): void;
+    error(message: string): void;
+    ondosbox(dosbox: any, instantiateWasm: any): void;
+    resolve(): void;
+    onRuntimeInitialized(): void;
+    registerTickListener(listener: () => void): void;
+    registerPauseListener(listener: () => void): void;
+    registerResumeListener(listener: () => void): void;
+    registerTerminateListener(listener: () => void): void;
+    tick(): void;
+    pause(): void;
+    resume(): void;
+    terminate(): void;
+}
