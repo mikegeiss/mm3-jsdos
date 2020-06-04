@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { DosboxService } from './dosbox.service';
 import { KeyboardComponent } from './keyboard/keyboard.component';
 import { InventarComponent } from './inventar/inventar.component';
+import { DbService } from './inventar/db.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { InventarComponent } from './inventar/inventar.component';
     BrowserModule,
     FormsModule
   ],
-  providers: [DosboxService],
+  providers: [DosboxService, DbService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
