@@ -1,1 +1,39 @@
 <h1>Inventar</h1>
+
+<div *ngFor="let char of characters$ | async">
+    <h3>{{char.name}} (Stufe {{char.level}})</h3>
+    <table>
+        <tr>
+            <th class="name">Waffe</th>
+            <th class="schade">Schaden</th>
+            <th class="wert">Wert</th>
+        </tr>
+        <tr class="gegenstand" *ngFor="let item of char.waffen" (click)="setCurrentItem(char, item)">
+            <td class="name">{{getItemName(item)}}</td>
+            <td class="schaden">{{getItemSchaden(item)}}</td>
+            <td class="wert">{{item.wert}}</td>
+        </tr>
+        <tr>
+            <th class="name">Ruestung</th>
+            <th class="ruestung">R&uuml;stungsklasse</th>
+            <th class="ruestung">Wert</th>
+        </tr>
+        <tr class="gegenstand" *ngFor="let item of char.ruestungen" (click)="setCurrentItem(char, item)">
+            <td class="name">{{getItemName(item)}}</td>
+            <td class="ruestung">{{getItemRuestungsklasse(item)}}</td>
+            <td class="wert">{{item.wert}}</td>
+        </tr>
+
+        <tr>
+            <th class="name ">Verschiedens</th>
+            <th class="ruestung">R&uuml;stungsklasse</th>
+            <th class="ruestung">Wert</th>
+        </tr>
+        <tr class="gegenstand" *ngFor="let item of char.verschiedenes" (click)="setCurrentItem(char, item)">
+            <td class="name">{{getItemName(item)}}</td>
+            <td class="ruestung">{{getItemRuestungsklasse(item)}}</td>
+            <td class="wert">{{item.wert}}</td>
+        </tr>
+    </table>
+
+</div>
