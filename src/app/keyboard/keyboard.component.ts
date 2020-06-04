@@ -16,10 +16,8 @@ export class KeyboardComponent implements OnInit {
 
     private configureKeyboardListener() {
         const numbers = Array.from(Array(26).keys());
-        console.log(numbers);
-        numbers
-            .map((n) => String.fromCharCode(65 + n))
-            .forEach((letter) => this.configureKeyListener("key_" + letter, Key[letter]))
+        const letters = numbers.map((n) => String.fromCharCode(65 + n))
+        letters.forEach((letter) => this.configureKeyListener("key_" + letter, Key[letter]))
         // var chr = String.fromCharCode(65); // where n is 0, 1, 2 .
     }
 
