@@ -4,6 +4,6 @@ export class ItemBonus {
   }
 
   public toString(): string {
-    return "+" + this.value + " " + this.typ;
+    return `+${this.value} ${this.typ}`;
   }
 }

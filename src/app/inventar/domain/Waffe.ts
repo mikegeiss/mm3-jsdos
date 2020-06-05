@@ -1,27 +1,27 @@
-import {Gegenstand} from "./Gegenstand";
-import {WaffenInfo} from "./WaffenInfo";
-import {ItemBonus} from "./ItemBonus";
-import {ElementZusatz} from "./ElementZusatz";
-import {Material} from "./Material";
-import {GegenstandsInfo} from "./GegenstandInfo";
+import { Gegenstand } from './Gegenstand';
+import { WaffenInfo } from './WaffenInfo';
+import { ItemBonus } from './ItemBonus';
+import { ElementZusatz } from './ElementZusatz';
+import { Material } from './Material';
+import { GegenstandsInfo } from './GegenstandInfo';
 
 export class Waffe extends Gegenstand {
 
-  info: WaffenInfo;
   schadenString: string;
 
-  constructor(name: string, itemInfo: GegenstandsInfo, material: Material, elementZusatz: ElementZusatz, bonus: ItemBonus, currentCharClass: string, equippedStatusHex: string) {
-    super(itemInfo, material);
-    this.name = name;
-    this.info = <WaffenInfo> itemInfo;
-    this.material = material;
-    this.elementZusatz = elementZusatz;
-    this.bonus = bonus;
-    this.currentCharClass = currentCharClass;
-    this.equippedStatusHex = equippedStatusHex;
-
+  constructor(
+    public name: string,
+    public info: WaffenInfo,
+    public material: Material,
+    public elementZusatz: ElementZusatz,
+    public bonus: ItemBonus,
+    public currentCharClass: string,
+    public equippedStatusHex: string
+  ) {
+    super(info, material);
     // this.schadenString = `${this.getMinSchaden()}-${this.getMaxSchaden()}`
-    // this.schadenString += (this.elementZusatz && this.elementZusatz.name ) ? ` (+ ${this.elementZusatz.schaden} ${this.elementZusatz.name})` : "";
+    // this.schadenString +=
+    //     (this.elementZusatz && this.elementZusatz.name ) ? ` (+ ${this.elementZusatz.schaden} ${this.elementZusatz.name})` : "";
   }
 
   public isPossibleForKlasse(klasse: string): boolean {
@@ -33,7 +33,7 @@ export class Waffe extends Gegenstand {
   }
 
   public isOneHanded(): boolean {
-    return this.info.itemType !== "zweihändig";
+    return this.info.itemType !== 'zweihändig';
   }
 
   public getWaffenInfo(): WaffenInfo {
@@ -59,8 +59,8 @@ export class Waffe extends Gegenstand {
   public toString(): string {
     return this.getTragbarString() +
            this.getEquippedString() +
-           (this.bonus ? this.bonus : "") +
-           " " + this.material + this.name + "\t " + this.getMinSchaden() + "-" + this.getMaxSchaden() +
+           (this.bonus ? this.bonus : '') +
+           ' ' + this.material + this.name + '\t ' + this.getMinSchaden() + '-' + this.getMaxSchaden() +
            this.getBonusString() +
            this.getElementarSchadenString() +
            this.getElementarWiderstandString();

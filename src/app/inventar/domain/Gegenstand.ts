@@ -1,12 +1,12 @@
-import {Material} from "./Material";
-import {ItemBonus} from "./ItemBonus";
-import {ElementZusatz} from "./ElementZusatz";
-import {GegenstandsInfo} from "./GegenstandInfo";
-import {Utils} from "./Utils";
+import { Material } from './Material';
+import { ItemBonus } from './ItemBonus';
+import { ElementZusatz } from './ElementZusatz';
+import { GegenstandsInfo } from './GegenstandInfo';
+import { Utils } from './Utils';
 
 export abstract class Gegenstand {
 
-  id: string
+  id: string;
   currentCharClass: string;
   name: string;
   material: Material;
@@ -17,9 +17,9 @@ export abstract class Gegenstand {
 
   constructor(itemInfo: GegenstandsInfo, material: Material) {
     this.id = Utils.uuidv4();
-    
+
     if (material.preis) {
-      this.wert = this.berechneWert(itemInfo.wert, material.preis)
+      this.wert = this.berechneWert(itemInfo.wert, material.preis);
     }
     else {
       this.wert = itemInfo.wert;
@@ -30,10 +30,10 @@ export abstract class Gegenstand {
   public berechneWert(wert: number, anpassung: string): number {
     const symbol = anpassung.slice(0, 1);
     const faktor: number = parseFloat(anpassung.slice(1));
-    if (symbol === "*") {
+    if (symbol === '*') {
       wert *= faktor;
     }
-    if (symbol === "/") {
+    if (symbol === '/') {
       wert /= faktor;
     }
     return parseInt(wert.toFixed(2), 10);
@@ -44,30 +44,30 @@ export abstract class Gegenstand {
   public abstract isPossible(): boolean;
 
   public isEquipped(): boolean {
-    return this.equippedStatusHex !== "00"; // TODO MGe - evtl steht da nur 0 drin
+    return this.equippedStatusHex !== '00'; // TODO MGe - evtl steht da nur 0 drin
   }
 
   public getEquippedString(): string {
-    return this.isEquipped() ? "+" : "-"
+    return this.isEquipped() ? '+' : '-';
   }
 
   getTragbarString(): string {
-    return this.isPossible() ? "" : "!"
+    return this.isPossible() ? '' : '!';
   }
 
   getElementarSchadenString(): string {
-    return this.elementZusatz.schaden > 0 ? "\n" + "(+ " + this.elementZusatz.schaden + "Dmg " + this.elementZusatz.element + ")" : "";
+    return this.elementZusatz.schaden > 0 ? '\n' + '(+ ' + this.elementZusatz.schaden + 'Dmg ' + this.elementZusatz.element + ')' : '';
   }
 
   getElementarWiderstandString(): string {
-    return this.elementZusatz.widerstand > 0 ? "\n" + "(+ " + this.elementZusatz.widerstand + "Res " + this.elementZusatz.element + ")" : ""
+    return this.elementZusatz.widerstand > 0 ? '\n' + '(+ ' + this.elementZusatz.widerstand + 'Res ' + this.elementZusatz.element + ')' : '';
   }
 
   getBonusString(): string {
     if (this.bonus) {
-      return this.bonus.typ !== "" ? "\n" + this.bonus : "";
+      return this.bonus.typ !== '' ? '\n' + this.bonus : '';
     }
-    return ""
+    return '';
     // TODO MGe -  if kann später wieder raus
 
   }

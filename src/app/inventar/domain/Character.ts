@@ -1,29 +1,28 @@
-import {MMDictionary} from "./Dictionary";
-import {Gegenstand} from "./Gegenstand";
-import {ItemFactory} from "./ItemFactory";
-import {Waffe} from "./Waffe";
-import {Ruestung} from "./Ruestung";
-import {Verschiedenes} from "./Verschiedenes";
+import { MMDictionary } from './Dictionary';
+import { Gegenstand } from './Gegenstand';
+import { ItemFactory } from './ItemFactory';
+import { Waffe } from './Waffe';
+import { Ruestung } from './Ruestung';
+import { Verschiedenes } from './Verschiedenes';
 
 export class Character {
-  private GESCHLECHT_POSITION: number = 16;
-  private RASSE_POSITION: number = 17;
-  private KLASSE_POSITION: number = 19;
-  private STUFE_POSITION: number = 35;
-  private ALTER_POSITION: number = 38;
-  private ITEMS_POSITION: number = 125;
-
   charAsHex: string[];
   id: string;
   name: string;
   level: number;
-  klasse: string
+  klasse: string;
   public items: Gegenstand[] = [];
   public waffen: Waffe[] = [];
   public ruestungen: Ruestung[] = [];
   public verschiedenes: Verschiedenes[] = [];
-  public ringe: Verschiedenes[] = []
+  public ringe: Verschiedenes[] = [];
   public medaillons: Verschiedenes[] = [];
+  private readonly GESCHLECHT_POSITION = 16;
+  private readonly RASSE_POSITION = 17;
+  private readonly KLASSE_POSITION = 19;
+  private readonly STUFE_POSITION = 35;
+  private readonly ALTER_POSITION = 38;
+  private readonly ITEMS_POSITION = 125;
 
   //
   // int RINGE_MAX = 10;
@@ -32,7 +31,7 @@ export class Character {
   //
 
   constructor(charAsHex: string[], name: string) {
-    this.id = name.replace(" ", "");
+    this.id = name.replace(' ', '');
     this.name = name;
     this.charAsHex = charAsHex;
     this.level = parseInt(charAsHex[this.STUFE_POSITION], 16);
@@ -43,45 +42,45 @@ export class Character {
 
   retrieveItemsFromHex() {
     const itemPropertyPositions: any[] = [
-      {pos: 125, was: "itemType"},
+      {pos: 125, was: 'itemType'},
       {pos: 144},
-      {pos: 163, was: "elementZusatz"},
-      {pos: 182, was: "Material"},
-      {pos: 201, was: "Bonus"},
+      {pos: 163, was: 'elementZusatz'},
+      {pos: 182, was: 'Material'},
+      {pos: 201, was: 'Bonus'},
       {pos: 220},
       {pos: 239}
     ];
     const INVENTORY_SIZE = 18;
-    const inventoryPositions =  Array.from(Array(INVENTORY_SIZE).keys());
+    const inventoryPositions = Array.from(Array(INVENTORY_SIZE).keys());
 
-    inventoryPositions.forEach((inventoryPosition:number) => {
+    inventoryPositions.forEach((inventoryPosition: number) => {
       const itemPropertiesHexValues = itemPropertyPositions.map((position): string => {
         return this.charAsHex.slice((position.pos + inventoryPosition), (position.pos + inventoryPosition + 1))[0];
-      })
-      
+      });
+
       const item: Gegenstand = ItemFactory.createItem(itemPropertiesHexValues, this.klasse);
-      
+
       if (item) {
         this.items.push(item);
         this.addItemToCorrespondingCollection(item);
       }
-    })
+    });
   }
 
   private addItemToCorrespondingCollection(item: Gegenstand) {
     if (item instanceof Waffe) {
-      this.waffen.push(<Waffe>item);
+      this.waffen.push(item);
     }
     else if (item instanceof Ruestung) {
-      this.ruestungen.push(<Ruestung>item);
+      this.ruestungen.push(item);
     }
     else if (item instanceof Verschiedenes) {
-      let verschiedenesItem = <Verschiedenes>item;
+      const verschiedenesItem = item;
       this.verschiedenes.push(verschiedenesItem);
-      if (item.getInfo().itemType === "Medaillon") {
+      if (item.getInfo().itemType === 'Medaillon') {
         this.medaillons.push(verschiedenesItem);
       }
-      else if (item.getInfo().itemType === "Ring") {
+      else if (item.getInfo().itemType === 'Ring') {
         this.ringe.push(verschiedenesItem);
       }
     }

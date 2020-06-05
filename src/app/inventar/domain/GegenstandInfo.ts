@@ -1,23 +1,22 @@
-import {Map} from "./Dictionary";
+import { Map } from './Dictionary';
 
 export abstract class GegenstandsInfo {
   possibleClasses: Map<boolean> = {};
-  availableClasses: string[] = ["Ritter", "Paladin", "Bogenschütze", "Kleriker", "Zauberer", "Dieb", "Ninja", "Barbar", "Druide", "Waldläufer"];
+  availableClasses: string[] = ['Ritter', 'Paladin', 'Bogenschütze', 'Kleriker', 'Zauberer', 'Dieb', 'Ninja', 'Barbar', 'Druide', 'Waldläufer'];
   itemType: string;
-  schadenOderRkl: string;
-  wert:number;
+  schaden: number;
+  ruestungsklasse: number;
+  wert: number;
+  klassen: string;
 
   isPossible(klasse: string): boolean {
     return this.possibleClasses[klasse];
   }
 
-  klassen: string
-
   parsePossibleClasses(klassen: string) {
-    this.klassen = klassen;
     this.availableClasses.forEach((klasse, index) => {
-      this.possibleClasses[klasse] = klassen.charAt(index) != '-'
-    })
+      this.possibleClasses[klasse] = klassen.charAt(index) !== '-';
+    });
 
   }
 }

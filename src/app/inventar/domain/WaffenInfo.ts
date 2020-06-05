@@ -1,4 +1,4 @@
-import {GegenstandsInfo} from "./GegenstandInfo";
+import { GegenstandsInfo } from './GegenstandInfo';
 
 export class WaffenInfo extends GegenstandsInfo {
 
@@ -6,18 +6,18 @@ export class WaffenInfo extends GegenstandsInfo {
   maxSchaden: number;
   wert: number;
 
-  constructor(schaden: string, typ: string, klassen: string, wert: number) {
+  constructor(schaden: string, typ: string, public klassen: string, wert: number) {
     super();
-    const schadenSplitted = schaden.split("-");
+    const schadenSplitted = schaden.split('-');
     this.itemType = typ;
-    this.minSchaden = parseInt(schadenSplitted[0]);
-    this.maxSchaden = parseInt(schadenSplitted[1]);
+    this.minSchaden = parseInt(schadenSplitted[0], 10);
+    this.maxSchaden = parseInt(schadenSplitted[1], 10);
     this.parsePossibleClasses(klassen);
     this.wert = wert;
   }
 
   toString(): string {
-    return this.itemType + " " + this.klassen;
+    return this.itemType + ' ' + this.klassen;
   }
 
 }
