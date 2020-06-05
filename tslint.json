@@ -85,6 +85,7 @@
         "always"
       ]
     },
+    "no-bitwise": false,
     "space-before-function-paren": {
       "options": {
         "anonymous": "never",
