@@ -26,13 +26,14 @@ export class ItemFactory {
 
     if (itemInfo != null) {
       const itemType: string = itemInfo.itemType;
+      
       if (['einhändig', 'zweihändig', 'Fernkampf'].indexOf(itemType) !== -1) {
         return new Waffe(name, itemInfo as WaffenInfo, material, elementZusatz, bonus, currentCharClass, equippedStatusHex);
       }
       if (['Rüstung', 'Hand', 'Gürtel', 'Handschuhe', 'Helm', 'Mantel', 'Stiefel'].indexOf(itemType) !== -1) {
         return new Ruestung(name, itemInfo, material, elementZusatz, bonus, currentCharClass, equippedStatusHex);
       }
-      if (['Kette', 'Medaillon', 'Ring'].indexOf(itemType) !== -1) {
+      if (['Kette', 'Medaillon', 'Ring', 'UNKNOWN'].indexOf(itemType) !== -1) {
         return new Verschiedenes(name, itemInfo, material, elementZusatz, bonus, currentCharClass, equippedStatusHex);
       }
     }
