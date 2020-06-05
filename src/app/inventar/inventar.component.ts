@@ -15,6 +15,9 @@ import { Ruestung } from './domain/Ruestung';
 })
 export class InventarComponent implements OnInit {
     public characters$: Subject<Character[]> = new BehaviorSubject([]);
+    public selectedItem: Gegenstand;
+    public hoveredItem: Gegenstand;
+
     constructor(private dbService: DbService) { }
     public ngOnInit(): void {
         this.dbService.loadSavegame("/mm3/MM3/SAVE03.MM3").then((savegame) => {
@@ -25,13 +28,24 @@ export class InventarComponent implements OnInit {
     }
 
     public setCurrentItem(char: Character, item: Gegenstand) {
-        // console.log(char, item);
+        if (this.selectedItem !== item) {
+            this.selectedItem = item;
+        } else {
+            this.selectedItem = null;
+        }
+    }
 
+    public hoverItem(item: Gegenstand) {
+        this.hoveredItem = item;
+    }
+
+    public unhoverItem() {
+        this.hoveredItem = null;
     }
 
     public getItemName(item: Gegenstand) {
         // console.log('item',item);
-        
+
         return [item.elementZusatz?.name, item.bonus?.name, item.material?.name, item.name].join(" ");
     }
 

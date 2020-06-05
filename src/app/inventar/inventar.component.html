@@ -1,39 +1,73 @@
 <h1>Inventar</h1>
 
-<div *ngFor="let char of characters$ | async">
-    <h3>{{char.name}} (Stufe {{char.level}})</h3>
-    <table>
-        <tr>
-            <th class="name">Waffe</th>
-            <th class="schade">Schaden</th>
-            <th class="wert">Wert</th>
-        </tr>
-        <tr class="gegenstand" *ngFor="let item of char.waffen" (click)="setCurrentItem(char, item)">
-            <td class="name">{{getItemName(item)}}</td>
-            <td class="schaden">{{getItemSchaden(item)}}</td>
-            <td class="wert">{{item.wert}}</td>
-        </tr>
-        <tr>
-            <th class="name">Ruestung</th>
-            <th class="ruestung">R&uuml;stungsklasse</th>
-            <th class="ruestung">Wert</th>
-        </tr>
-        <tr class="gegenstand" *ngFor="let item of char.ruestungen" (click)="setCurrentItem(char, item)">
-            <td class="name">{{getItemName(item)}}</td>
-            <td class="ruestung">{{getItemRuestungsklasse(item)}}</td>
-            <td class="wert">{{item.wert}}</td>
-        </tr>
+<div class="vergleich">
+    <div class="vergleich-selected" *ngIf="selectedItem">Selected:<br/>{{selectedItem.toString()}}</div>
+    <div class="vergleich-hovered" *ngIf="selectedItem && hoveredItem">Hovered:<br/>{{hoveredItem.toString()}}</div>
+</div>
+<div class="character" *ngFor="let char of characters$ | async">
+    <div class="character-header">
+        <span class="character-name">{{char.name}}</span> (Stufe {{char.level}})
+    </div>
 
-        <tr>
-            <th class="name ">Verschiedens</th>
-            <th class="ruestung">R&uuml;stungsklasse</th>
-            <th class="ruestung">Wert</th>
-        </tr>
-        <tr class="gegenstand" *ngFor="let item of char.verschiedenes" (click)="setCurrentItem(char, item)">
-            <td class="name">{{getItemName(item)}}</td>
-            <td class="ruestung">{{getItemRuestungsklasse(item)}}</td>
-            <td class="wert">{{item.wert}}</td>
-        </tr>
-    </table>
+    <div class="character-waffen-ruestung">
+        <div class="character-waffen">
+            <table>
+                <tr>
+                    <th class="ausgeruestet"></th>
+                    <th class="name">Waffe</th>
+                    <th class="schade">Dmg</th>
+                    <th class="wert">Wert</th>
+                </tr>
+                <tr class="gegenstand" *ngFor="let item of char.waffen" (mouseenter)="hoverItem(item)" (mouseleave)="unhoverItem()" (click)="setCurrentItem(char, item)">
+                    <td class="ausgeruestet">{{item.isEquipped() ? "*" : ""}}</td>
+                    <td class="name">{{getItemName(item)}}</td>
+                    <td class="schaden">{{getItemSchaden(item)}}</td>
+                    <td class="wert">{{item.wert}}</td>
+                </tr>
+            </table>
+
+        </div>
+
+        <div class="character-ruestung">
+
+            <table>
+                <tr>
+                    <th class="ausgeruestet"></th>
+                    <th class="name">Ruestung</th>
+                    <th class="ruestung">Rkl</th>
+                    <th class="wert">Wert</th>
+                </tr>
+                <tr class="gegenstand" *ngFor="let item of char.ruestungen" (mouseenter)="hoverItem(item)" (mouseleave)="unhoverItem()" (click)="setCurrentItem(char, item)">
+                    <td class="ausgeruestet">{{item.isEquipped() ? "*" : ""}}</td>
+                    <td class="name">{{getItemName(item)}}</td>
+                    <td class="ruestung">{{getItemRuestungsklasse(item)}}</td>
+                    <td class="wert">{{item.wert}}</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+
+    <div class="character-verschiedenes">
+
+        <table>
+            <tr>
+                <th class="ausgeruestet"></th>
+                <th class="name ">Verschiedens</th>
+                <th class="ruestung">R&uuml;stungsklasse</th>
+                <th class="wert">Wert</th>
+            </tr>
+            <tr class="gegenstand" *ngFor="let item of char.verschiedenes" (mouseenter)="hoverItem(item)" (mouseleave)="unhoverItem()" (click)="setCurrentItem(char, item)">
+                <td class="ausgeruestet">{{item.isEquipped() ? "*" : ""}}</td>
+                <td class="name">{{getItemName(item)}}</td>
+                <td class="ruestung">{{getItemRuestungsklasse(item)}}</td>
+                <td class="wert">{{item.wert}}</td>
+            </tr>
+        </table>
+
+    </div>
+
+
 
 </div>
