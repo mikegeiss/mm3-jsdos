@@ -15,12 +15,28 @@ import { Ruestung } from './domain/Ruestung';
 })
 export class InventarComponent implements OnInit {
     public characters$: Subject<Character[]> = new BehaviorSubject([]);
+    public savegames$: Subject<string[]> = new BehaviorSubject([]);
     public selectedItem: Gegenstand;
     public hoveredItem: Gegenstand;
+    public currentSavegame: string;
 
     constructor(private dbService: DbService) { }
     public ngOnInit(): void {
-        this.dbService.loadSavegame("/mm3/MM3/SAVE03.MM3").then((savegame) => {
+        this.dbService.getSavegames().then((savegames) => {
+            console.log('save', savegames);
+
+            this.savegames$.next(savegames);
+        })
+        // todo Bei einem kompletten Reset der DB darf dies erst ausgeführt werden, 
+        // sobald die Dosbox läuft und die DB initialisiert hat
+
+
+    }
+
+    public loadSavegame(): void {
+        console.log('lade Savegame:', this.currentSavegame);
+
+        this.dbService.loadSavegame(this.currentSavegame).then((savegame) => {
             const chars = new SavegameParser().parseChars(savegame);
             console.log(chars[0].items);
             this.characters$.next(chars);

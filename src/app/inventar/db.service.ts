@@ -6,6 +6,13 @@ export class DbService {
     public readonly DB_NAME = "/mm3";
     public readonly STORE_NAME = "FILE_DATA";
 
+
+    public async getSavegames(): Promise<string[]> {
+        const db = await this.connectToDb();
+        const keys: string[] = await db.getAllKeys(this.STORE_NAME) as string[];
+        return keys.filter((key:string) => key.endsWith(".MM3"));
+    }
+
     public async loadSavegame(savegame: string): Promise<string[]> {
         const db = await this.connectToDb();
         const savegameData = await db.get(this.STORE_NAME, savegame);
